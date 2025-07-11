@@ -1,13 +1,21 @@
 import cohere
 import streamlit as st
-import os
-from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
+# Initialize cohere client - handles both local (secrets.toml) and Streamlit Cloud (secrets)
+def get_cohere_client():
+    # Try to get API key from Streamlit secrets (for both local and cloud deployment)
+    try:
+        api_key = st.secrets["COHERE_API_KEY"]
+    except (KeyError, FileNotFoundError):
+        st.error("⚠️ Cohere API key not found. Please configure your API key.")
+        st.info("For local development: Add COHERE_API_KEY to .streamlit/secrets.toml")
+        st.info("For Streamlit Cloud: Add COHERE_API_KEY to your app secrets")
+        st.stop()
+    
+    return cohere.ClientV2(api_key=api_key)
 
 # Initialize cohere client
-co = cohere.ClientV2(os.getenv("COHERE_API_KEY"))
+co = get_cohere_client()
 
 # Streamlit UI
 st.title("Text Summarization with Cohere")
@@ -36,6 +44,5 @@ if st.button("Summarize"):
                 st.write(summary)
             except Exception as e:
                 st.error(f"An error occurred: {e}")
-                
     else:
         st.warning("Please enter some text to summarize.")
