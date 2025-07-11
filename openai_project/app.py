@@ -7,7 +7,12 @@ import os
 
 load_dotenv()
 
-app = FastAPI()
+app = FastAPI(
+    title="AI Content Generator API",
+    description="FastAPI backend for AI content generation using OpenAI GPT-4.1-nano",
+    version="1.0.0"
+)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
