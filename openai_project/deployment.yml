@@ -1,0 +1,97 @@
+# Backend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-generator-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: content-generator-backend
+  template:
+    metadata:
+      labels:
+        app: content-generator-backend
+    spec:
+      containers:
+        - name: content-generator-backend
+          image: openai_project-backend:latest
+          imagePullPolicy: Never  # Use local image
+          ports:
+            - containerPort: 8001
+          env:
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: openai-secret
+                  key: OPENAI_API_KEY
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+
+---
+# Backend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: content-generator-backend-service
+spec:
+  selector:
+    app: content-generator-backend
+  ports:
+    - protocol: TCP
+      port: 8001
+      targetPort: 8001
+  type: ClusterIP
+
+---
+# Frontend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-generator
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: content-generator
+  template:
+    metadata:
+      labels:
+        app: content-generator
+    spec:
+      containers:
+        - name: content-generator
+          image: openai_project-frontend:latest
+          imagePullPolicy: Never  # Use local image
+          ports:
+            - containerPort: 8501
+          env:
+            - name: BACKEND_HOST
+              value: "content-generator-backend-service"
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+
+---
+# Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: content-generator-service
+spec:
+  selector:
+    app: content-generator
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8501
+  type: LoadBalancer
