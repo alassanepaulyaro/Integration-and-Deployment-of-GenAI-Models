@@ -1,0 +1,21 @@
+Example Questions for RAG After Ingesting Text 1
+
+What are the first steps to take when starting a mobile project in a company?
+
+Why is assembling a multidisciplinary team important in mobile project management?
+
+How does adopting Agile methodologies like Scrum or Kanban benefit a mobile project?
+
+What is the role of the Product Owner and the Scrum Master in an Agile mobile project?
+
+Which architectural patterns are recommended for mobile app development, and why?
+
+How do CI/CD tools contribute to the success of a mobile project?
+
+Why is automating unit, functional, and UI tests important during mobile app development?
+
+Besides technical aspects, what other factors are crucial for the success of a mobile project?
+
+How should usage metrics be used to guide improvements in a mobile project?
+
+Why is GDPR compliance important for mobile applications in production?
