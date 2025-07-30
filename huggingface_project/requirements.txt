@@ -9,3 +9,5 @@ streamlit
 langchain-experimental
 wikipedia
 langchain-openai
+tavily-python
+numexpr
