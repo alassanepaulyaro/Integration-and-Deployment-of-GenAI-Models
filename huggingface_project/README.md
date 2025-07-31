@@ -1,246 +1,109 @@
-# 🤖 GenAI Question Answering Application
+# GenAI LangChain & OpenAI/HuggingFace Streamlit Playground
 
-An interactive AI-powered question-answering application using Google's FLAN-T5-base model with local execution via Streamlit, built with **LangChain** for LLM orchestration and **Transformers** for Hugging Face model integration.
+A versatile playground for GenAI projects using **LangChain**, **OpenAI**, **HuggingFace**, and **Streamlit**. Includes a wide range of app templates:
 
-## 📋 Table of Contents
+* 💬 **Conversational AI (GPT-4.1-nano, OpenAI, Conversation Memory)**
+* 🤖 **Agentic QA (OpenAI, Wikipedia, Tavily, Math Tool)**
+* 🧠 **RAG (Retrieval-Augmented Generation): Multi-Document, PDF/DOCX/TXT**
+* 🏷️ **Company Naming, Slogan, Prompt Chaining**
+* ⚡ **Simple Sequential Chains, Prompt Templates**
 
-- [Overview](#overview)
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Technologies Used](#technologies-used)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
+Ready for demo, learning, and rapid prototyping with your own `.env` and custom models!
 
-## 🎯 Overview
+---
 
-This application demonstrates how to build a local AI question-answering system using Google's FLAN-T5-base model. The project evolved from initial attempts with Hugging Face's remote inference API to a robust local implementation using HuggingFacePipeline, providing better reliability and control over the model execution.
+## 🚀 Quickstart
 
-The application includes both a simple command-line interface (`main.py`) and a full-featured Streamlit web application (`app.py`) for interactive conversations.
+1. **Clone or download this repo**
+2. *(Optional)* Create a Python venv and activate it:
 
-## 🔧 Prerequisites
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # or .\venv\Scripts\activate on Windows
+   ```
+3. **Install dependencies:**
 
-- Python 3.8+
-- pip (Python package manager)
-- **8GB RAM minimum** (for FLAN-T5-base model)
-- **5GB free disk space** (for model storage)
-- Internet connection for initial model download
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. **Add your `.env` file with secrets:**
 
-## 🚀 Installation
+   ```env
+   OPENAI_API_KEY=sk-...
+   HUGGINGFACEHUB_API_TOKEN=hf_...
+   ```
+5. **Launch any Streamlit app:**
 
-### 1. Clone the repository
+   ```bash
+   streamlit run app.py                   # HF QA playground
+   streamlit run app_chain.py             # Prompt chaining (HuggingFace)
+   streamlit run app_agent.py             # OpenAI Wikipedia agent
+   streamlit run app_agent_tavily.py      # OpenAI Plan & Execute agent (Tavily, Wikipedia, Math)
+   streamlit run app_conversationelchain.py # OpenAI conversational chatbot
+   streamlit run app_rag.py               # Retrieval-Augmented QA (multi-doc, PDF, docx, txt)
+   streamlit run app_simple_seqential_chain.py # Simple sequential chain demo
+   # ...or any main_*.py variant from terminal
+   ```
 
-```bash
-git clone <your-repository-url>
-cd huggingface_project
-```
+---
 
-### 2. Create a virtual environment
+## 📂 Main Files & Apps
 
-```bash
-python -m venv venv
+| File                               | Description                                            |
+| ---------------------------------- | ------------------------------------------------------ |
+| `app.py`                           | QA with HuggingFace FLAN-T5-base (Streamlit)           |
+| `app_chain.py`                     | Prompt chaining, product naming (HF)                   |
+| `app_agent.py`                     | OpenAI Wikipedia React Agent (GPT-4.1-nano)            |
+| `app_agent_tavily.py`              | Plan & Execute Agent (Tavily, Wikipedia, Math, OpenAI) |
+| `app_conversationelchain.py`       | Conversational chatbot (OpenAI, memory)                |
+| `app_rag.py`                       | Multi-doc RAG: TXT, PDF, DOCX                          |
+| `app_simple_seqential_chain.py`    | Simple sequential chain demo (HF GPT2)                 |
+| `main.py`                          | CLI QA with HF FLAN-T5-base                            |
+| `main_agent.py`                    | CLI Wikipedia React Agent (OpenAI)                     |
+| `main_agent_tavily.py`             | CLI Plan & Execute Agent                               |
+| `main_chain.py`                    | CLI prompt chaining demo                               |
+| `main_conversationelchain.py`      | CLI conversational chain (OpenAI)                      |
+| `main_conversationhistory.py`      | CLI: Conversation with chat history loading            |
+| `main_rag.py`                      | CLI: Simple Retrieval-Augmented Generation             |
+| `managing-a-mobile-project-...txt` | Sample document for RAG                                |
 
-# Windows
-venv\Scripts\activate
+---
 
-# macOS/Linux
-source venv/bin/activate
-```
+## 🛠️ Features
 
-### 3. Install dependencies
+* **OpenAI & HuggingFace LLMs**
+* **Agents** (Wikipedia, Tavily, Math, Plan\&Execute)
+* **Multi-format document QA** (TXT, PDF, DOCX)
+* **Prompt chaining & templates**
+* **Conversation memory & history**
+* **Streamlit interactive UIs**
+* **Configurable via .env and sidebar**
+* **Quick switches between QA, agents, chatbots**
 
-```bash
-pip install -r requirements.txt
-```
+---
 
-**Note**: The first run will download the FLAN-T5-base model (~1.2GB) which may take 5-15 minutes depending on your internet speed.
-
-## ⚙️ Configuration
-
-### 1. Environment Variables (Optional)
-
-Create a `.env` file in the root directory:
+## 📝 Example .env
 
 ```env
-# Optional: For future Hugging Face API integrations
-HUGGINGFACE_API_KEY=your_token_here
+OPENAI_API_KEY=sk-...
+HUGGINGFACEHUB_API_TOKEN=hf_...
 ```
 
-**Note**: The current implementation uses local model execution, so the API key is not required but can be added for future enhancements.
+---
 
-### 2. Model Configuration
+## 📦 Requirements
 
-The application uses these default settings:
-- **Model**: `google/flan-t5-base`
-- **Max Tokens**: 128 (Streamlit app) / 64 (CLI)
-- **Temperature**: 0.1 (Streamlit app) / 0 (CLI)
-- **Task**: `text2text-generation`
+All main libraries in `requirements.txt`. Main dependencies:
 
-## 🎮 Usage
+* `langchain`
+* `langchain_community`, `langchain-openai`, `langchain-huggingface`, `langchain-text-splitters`
+* `python-dotenv`, `streamlit`, `chromadb`, `transformers`, `torch`
+* `pdfplumber`, `unstructured`, `docx2txt`
+* `tavily-python`, `wikipedia`, `numexpr`, `tiktoken`
 
-### Option 1: Streamlit Web Application (Recommended)
+---
 
-```bash
-streamlit run app.py
-```
+## 🤖 Credits
 
-Access the application at: `http://localhost:8501`
-
-**Features:**
-- Interactive chat interface
-- Real-time parameter adjustment
-- Conversation history
-- Example question buttons
-- Model performance metrics
-
-### Option 2: Command Line Interface
-
-```bash
-python main.py
-```
-
-**Features:**
-- Simple question-answer format
-- Quick testing and debugging
-- Direct model interaction
-
-### Interface Guide
-
-**Streamlit App:**
-1. **Chat Input**: Type questions in the bottom input field
-2. **Sidebar Controls**: 
-   - Adjust max tokens (50-512)
-   - Modify temperature (0.0-1.0)
-   - Clear chat history
-3. **Example Buttons**: Quick start with predefined questions
-4. **Response Area**: AI responses with formatting
-
-### Usage Examples
-
-```text
-👤 User: "What are the benefits of regular exercise?"
-🤖 AI: "Regular exercise provides numerous benefits including improved cardiovascular health, stronger muscles and bones, better mental health..."
-
-👤 User: "How do you make a basic pasta dish?"
-🤖 AI: "To make basic pasta: 1) Boil salted water, 2) Add pasta and cook according to package directions..."
-
-👤 User: "Explain photosynthesis simply"
-🤖 AI: "Photosynthesis is the process where plants use sunlight, water, and carbon dioxide to create food and oxygen..."
-```
-
-## 📁 Project Structure
-
-```
-huggingface_project/
-├── app.py                 # Streamlit web application
-├── main.py               # Command-line interface
-├── requirements.txt      # Python dependencies
-├── .env                 # Environment variables (optional)
-├── README.md            # Project documentation
-├── venv/                # Virtual environment
-└── .cache/              # Model cache (created automatically)
-    └── huggingface/     # Downloaded models storage
-```
-
-## 🛠️ Technologies Used
-
-- **[Streamlit](https://streamlit.io/)** v1.28+ - Interactive web application framework
-- **[LangChain](https://langchain.com/)** - LLM orchestration and pipeline management
-- **[LangChain Community](https://python.langchain.com/docs/integrations/platforms/)** - HuggingFacePipeline integration
-- **[Transformers](https://huggingface.co/transformers/)** v4.35+ - Hugging Face model library
-- **[PyTorch](https://pytorch.org/)** - Deep learning framework backend
-- **[FLAN-T5-base](https://huggingface.co/google/flan-t5-base)** - Google's instruction-tuned language model
-- **[python-dotenv](https://pypi.org/project/python-dotenv/)** - Environment variable management
-
-## 🔍 Troubleshooting
-
-### Common Issues
-
-#### 1. Memory Issues
-```bash
-# Error: CUDA out of memory / RAM insufficient
-# Solution: Use smaller model variant
-# In app.py and main.py, change:
-model_name = "google/flan-t5-small"  # Instead of "flan-t5-base"
-```
-
-#### 2. Model Download Failures
-```bash
-# Error: Connection timeout during model download
-# Solution: Clear cache and retry
-rm -rf ~/.cache/huggingface/
-python app.py  # Will re-download model
-```
-
-#### 3. PyTorch Installation Issues
-```bash
-# For CUDA support (NVIDIA GPU)
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-
-# For CPU-only installation
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-```
-
-#### 4. LangChain Deprecation Warnings
-```bash
-# These warnings are normal and don't affect functionality
-# They indicate newer versions are available but current code works
-```
-
-#### 5. Streamlit Connection Issues
-```bash
-# If app doesn't open automatically
-# Manually navigate to: http://localhost:8501
-# Or try: streamlit run app.py --server.port 8502
-```
-
-### Performance Optimization
-
-#### For Low-Resource Systems:
-```python
-# In app.py, reduce model parameters:
-model_name = "google/flan-t5-small"  # Smaller model
-max_new_tokens = 64                  # Fewer tokens
-temperature = 0                      # Deterministic output
-```
-
-#### For High-Performance Systems:
-```python
-# Use larger model variants:
-model_name = "google/flan-t5-large"  # Better quality
-max_new_tokens = 256                 # Longer responses
-```
-
-### Debug Mode
-
-Enable detailed logging:
-
-```python
-import logging
-logging.basicConfig(level=logging.INFO)
-```
-
-
-## 📄 License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
-## 📧 Support
-
-For questions or issues:
-
-- **GitHub Issues**: [Open an issue](https://github.com/your-repo/issues)
-- **Streamlit Docs**: https://docs.streamlit.io/
-- **LangChain Docs**: https://python.langchain.com/
-- **Transformers Docs**: https://huggingface.co/docs/transformers/
-
-## 🙏 Acknowledgments
-
-- **Google** for the FLAN-T5 model family
-- **Hugging Face** for the Transformers library
-- **LangChain** for LLM orchestration tools
-- **Streamlit** for the amazing web app framework
+* Powered by [LangChain](https://github.com/langchain-ai/langchain), [OpenAI](https://platform.openai.com/), [HuggingFace](https://huggingface.co/), [Streamlit](https://streamlit.io/)
+* Example data: `managing-a-mobile-project-in-an-agile-environment.txt`
