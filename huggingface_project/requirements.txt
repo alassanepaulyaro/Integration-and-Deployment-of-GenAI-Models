@@ -11,3 +11,9 @@ wikipedia
 langchain-openai
 tavily-python
 numexpr
+chromadb
+tiktoken
+langchain-text-splitters
+docx2txt
+pdfplumber
+unstructured
